@@ -5,16 +5,20 @@ export default function reducer(state = {}, action) {
     case SET_TOKEN: {
       return {
         ...state,
-        token: action.token
+        token: action.token,
+        loggedIn: true,
+        user: action.user
       };
     }
 
     case REMOVE_TOKEN: {
       const newState = { ...state };
       delete newState.token;
+      delete newState.loggedIn;
       return newState;
     }
 
-    default: return state;
+    default:
+      return state;
   }
 }

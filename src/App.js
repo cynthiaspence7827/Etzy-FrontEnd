@@ -1,8 +1,18 @@
 import React from 'react';
+import { CssBaseline } from '@material-ui/core';
+import Theme from './Theme';
+import Navbar from './components/Navbar';
+import ProductCard from './components/ProductCard';
 
-function App() {
+function App(props) {
   return (
-    <h1>Hello world!</h1>
+    <>
+      <CssBaseline />
+      <Theme>
+        <Navbar />
+        <ProductCard />
+      </Theme>
+    </>
   );
 }
 
