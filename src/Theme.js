@@ -8,6 +8,9 @@ const theme = createMuiTheme({
     primary: {
       main: '#177E89'
     },
+    secondary: {
+      main: '#5CB5AD'
+    },
     success: {
       main: '#A0ECD0'
     },
@@ -31,7 +34,6 @@ const theme = createMuiTheme({
     }
   }
 });
-console.log(theme);
 
 const Theme = (props) => {
   return (

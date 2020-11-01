@@ -112,7 +112,7 @@ const AuthForm = (props) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText color="error">
-              {errors.map((err, i) => {
+              {errors.map(err => {
                 return <div>{err}</div>;
               })}
             </DialogContentText>

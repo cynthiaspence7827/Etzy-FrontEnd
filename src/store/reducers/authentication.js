@@ -7,14 +7,14 @@ export default function reducer(state = {}, action) {
         ...state,
         token: action.token,
         loggedIn: true,
-        user: action.user
+        currentUser: action.user
       };
     }
 
     case REMOVE_TOKEN: {
       const newState = { ...state };
       delete newState.token;
-      delete newState.loggedIn;
+      newState.loggedIn = false;
       return newState;
     }
 

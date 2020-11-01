@@ -90,13 +90,19 @@ const UserOptions = (props) => {
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>
-                      Purchases and Reviews
+                      <NavLink to='/profile'>
+                        Profile
+                      </NavLink>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                      Account Settings
+                      <NavLink to='/purchases'>
+                        Purchases and Reviews
+                      </NavLink>
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
-                      <NavLink>Sign Out</NavLink>
+                      <NavLink to='/'>
+                        Sign Out
+                      </NavLink>
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>

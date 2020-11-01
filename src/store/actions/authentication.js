@@ -48,7 +48,7 @@ export const signup = (userInfo) => async dispatch => {
     const { token, user } = await response.json();
     window.localStorage.setItem(TOKEN_KEY, token);
     window.localStorage.setItem('userId', user.id);
-    dispatch(setToken(token));
+    dispatch(setToken(token, user));
     return null;
   } else {
     const { error: { errors } } = await response.json();

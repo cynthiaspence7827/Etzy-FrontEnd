@@ -1,27 +1,17 @@
-import merge from 'lodash/merge';
-import { LOAD_PRODUCTS, LOAD_PRODUCT } from '../actions/product';
+import { LOAD_PRODUCT, EDIT_PRODUCT, NEW_PRODUCT } from '../actions/product';
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
+    case NEW_PRODUCT:
+    case EDIT_PRODUCT:
     case LOAD_PRODUCT: {
-      //load single product
-      const product = action.product;
       return {
         ...state,
-        [ action.product.id ]: product
+        currentProduct: action.product
       };
-    }
-
-    case LOAD_PRODUCTS: {
-      //load all products
-      const products = action.list.map(product => ({
-        [ product.id ]: product
-      }));
-      return merge({}, state, ...products);
     }
 
     default:
       return state;
-      break;
   }
 }
