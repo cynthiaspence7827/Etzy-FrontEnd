@@ -46,22 +46,22 @@ const AuthForm = (props) => {
       email,
       password,
       confirmPassword
-    }
+    };
     let errors = await dispatch(signup(user));
     if (!errors) {
       handleClose();
     } else {
       setErrors(errors);
     }
-  }
+  };
 
   const updateFirstName = e => {
     setFirstName(e.target.value);
-  }
+  };
 
   const updateLastName = e => {
     setLastName(e.target.value);
-  }
+  };
 
   const updateEmail = e => {
     setEmail(e.target.value);
@@ -73,7 +73,7 @@ const AuthForm = (props) => {
 
   const updateConfirmPassword = e => {
     setConfirmPassword(e.target.value);
-  }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -101,21 +101,34 @@ const AuthForm = (props) => {
         onClick={handleClickOpen}>
         Sign In
       </Button>
-      {loginView ?
         <Dialog
           open={open}
-          onClose={handleClose}
-          aria-labelledby='Log In/Sign Up'>
-          <DialogTitle
-            id='LoginTitle'>
-            Log In
-          </DialogTitle>
+          onClose={handleClose}>
+          <DialogTitle id='AuthTitle'>{loginView ? 'Log In' : 'Sign Up'}</DialogTitle>
           <DialogContent>
             <DialogContentText color="error">
               {errors.map(err => {
                 return <div>{err}</div>;
               })}
             </DialogContentText>
+            {loginView ? '' :
+              <>
+                <TextField
+                  id="firstName"
+                  type="text"
+                  label="First Name"
+                  onChange={updateFirstName}
+                  fullWidth
+                />
+                <TextField
+                  id="lastName"
+                  type="text"
+                  label="Last Name"
+                  onChange={updateLastName}
+                  fullWidth
+                />
+              </>
+            }
             <TextField
               id="email"
               type="email"
@@ -132,12 +145,21 @@ const AuthForm = (props) => {
               type="password"
               fullWidth
             />
+            {loginView ? '' :
+              <TextField
+                id="confirmPassword"
+                label="Confirm Password"
+                onChange={updateConfirmPassword}
+                type="password"
+                fullWidth
+              />
+            }
             <DialogContentText>
-              Don't have an account?
+              {loginView ? 'Don\'t have an account?' : 'Already have an account?'}
               <span
                 className={classes.switchLink}
                 onClick={switchForm}>
-                &nbsp; Sign Up
+                &nbsp; {loginView ? 'Sign Up' : 'Log In'}
               </span>
             </DialogContentText>
           </DialogContent>
@@ -149,90 +171,24 @@ const AuthForm = (props) => {
               width="75%">
               Cancel
             </Button>
-            <Button
-              id="login-button"
-              color="primary"
-              onClick={handleLogin}
-              width="75%">
-              Log In
-            </Button>
+            {loginView ?
+              <Button
+                id="login-button"
+                color="primary"
+                onClick={handleLogin}
+                width="75%">
+                Log In
+              </Button> :
+              <Button
+                id="login-button"
+                color="primary"
+                onClick={handleSignUp}
+                width="75%">
+                Sign Up
+              </Button>
+            }
           </DialogActions>
-        </Dialog> :
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby='Log In/Sign Up'>
-          <DialogTitle
-            id='AuthTitle'>
-            SignUp
-        </DialogTitle>
-          <DialogContent>
-            <DialogContentText color="error">
-              {errors.map((err, i) => {
-                return <div>{err}</div>;
-              })}
-            </DialogContentText>
-            <TextField
-              id="firstName"
-              type="text"
-              label="First Name"
-              onChange={updateFirstName}
-              fullWidth
-            />
-            <TextField
-              id="lastName"
-              type="text"
-              label="Last Name"
-              onChange={updateLastName}
-              fullWidth
-            />
-            <TextField
-              id="email"
-              type="email"
-              label="Email"
-              onChange={updateEmail}
-              fullWidth
-            />
-            <TextField
-              id="password"
-              label="Password"
-              onChange={updatePassword}
-              type="password"
-              fullWidth
-            />
-            <TextField
-              id="confirmPassword"
-              label="Confirm Password"
-              onChange={updateConfirmPassword}
-              type="password"
-              fullWidth
-            />
-            <DialogContentText>
-              Already have an account?
-          <span
-                className={classes.switchLink}
-                onClick={switchForm}>
-                &nbsp; Log In
-          </span>
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              id="cancel-button"
-              color="primary"
-              onClick={handleClose}
-              width="75%">
-              Cancel
-          </Button>
-            <Button
-              id="login-button"
-              color="primary"
-              onClick={handleSignUp}
-              width="75%">
-              Log In
-          </Button>
-          </DialogActions>
-        </Dialog>}
+        </Dialog>
     </>
   );
 };

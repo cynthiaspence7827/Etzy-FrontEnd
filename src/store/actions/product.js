@@ -13,6 +13,7 @@ export const getProduct = (id) => async (dispatch) => {
   if (response.ok) {
     const product = await response.json();
     dispatch(loadOne(product));
+    return product;
   }
 };
 

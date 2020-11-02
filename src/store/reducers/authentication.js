@@ -1,4 +1,4 @@
-import { SET_TOKEN, REMOVE_TOKEN } from '../actions/authentication';
+import { SET_TOKEN, REMOVE_TOKEN, CURRENTLY_LOGGED_IN } from '../actions/authentication';
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
@@ -13,9 +13,29 @@ export default function reducer(state = {}, action) {
 
     case REMOVE_TOKEN: {
       const newState = { ...state };
-      delete newState.token;
+      newState.token = null;
       newState.loggedIn = false;
+      newState.currentUser = {
+        firstName: '',
+        lastName: '',
+        avatar: '',
+        createdAt: '',
+        Shops: [],
+        FavoriteShops: [],
+        FavoriteProducts: [],
+        Followers: [],
+        Following: []
+      };
       return newState;
+    }
+
+    case CURRENTLY_LOGGED_IN: {
+      return {
+        ...state,
+        token: action.token,
+        loggedIn: true,
+        currentUser: action.user
+      };
     }
 
     default:

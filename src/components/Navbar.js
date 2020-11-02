@@ -7,8 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import StorefrontIcon from '@material-ui/icons/Storefront';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+// import StorefrontIcon from '@material-ui/icons/Storefront';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/actions/authentication';
@@ -16,6 +15,7 @@ import AuthForm from './AuthForm';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { NavLink } from 'react-router-dom';
+import { Avatar, Badge } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -36,8 +36,9 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  mainbar: {
-    background: theme.palette.background
+  navlink: {
+    color: 'inherit',
+    textDecoration: 'none'
   }
 }));
 
@@ -45,7 +46,9 @@ const Navbar = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [ anchorEl, setAnchorEl ] = useState(null);
-  const loggedIn = useSelector(state => state.loggedIn);
+  const loggedIn = useSelector(state => state.authentication.loggedIn);
+  const currentUser = useSelector(state => state.authentication.currentUser);
+  const cartItems = useSelector(state => Object.keys(state.cart).length);
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -73,18 +76,18 @@ const Navbar = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>
-        <NavLink to='/profile'>
+      {/* <MenuItem onClick={handleMenuClose}>
+        <NavLink to='/profile' className={classes.navlink}>
           Profile
         </NavLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-        <NavLink to='/purchases'>
+        <NavLink to='/purchases' className={classes.navlink}>
           Purchases and Reviews
         </NavLink>
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem onClick={handleSignOut}>
-        <NavLink to='/'>
+        <NavLink to='/' className={classes.navlink}>
           Sign Out
         </NavLink>
       </MenuItem>
@@ -103,29 +106,41 @@ const Navbar = (props) => {
           <div className={classes.grow} />
           {loggedIn ?
             <ButtonGroup variant="text" color="primary">
-              <Button color="primary" startIcon={<FavoriteIcon />}>
-                <NavLink to='/favorites'>
+              {/* <Button color="primary" startIcon={<FavoriteIcon />}>
+                <NavLink to='/favorites' className={classes.navlink}>
                   Favorites
                 </NavLink>
-              </Button>
-              <Button color="primary" startIcon={<StorefrontIcon />}>
-                <NavLink>
+              </Button> */}
+              {/* <Button color="primary" startIcon={<StorefrontIcon />}>
+                <NavLink to='/myshops' className={classes.navlink} >
                   Shop Manager
                 </NavLink>
-              </Button>
+              </Button> */}
               <Button
                 edge="end"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
-                startIcon={<AccountCircle color="primary" />}
+                color="primary"
+                startIcon={<Avatar alt={`${currentUser.name} ${currentUser.lastName}`} src={currentUser.avatar} />}
               >
                 You
-            </Button>
+              </Button>
+              <NavLink to='/cart' className={classes.navlink} >
+                <Button color="primary" startIcon={
+                  <Badge badgeContent={cartItems} color="error">
+                    <ShoppingCartIcon />
+                  </Badge>
+                } />
+              </NavLink>
             </ButtonGroup> :
             <ButtonGroup variant="text" color="primary">
               <AuthForm />
-              <Button color="primary" startIcon={<ShoppingCartIcon />}>
-              </Button>
+              <NavLink to='/cart' className={classes.navlink} >
+                <Button color="primary" startIcon={
+                  <Badge badgeContent={cartItems} color="error">
+                    <ShoppingCartIcon />
+                  </Badge>
+                } />
+              </NavLink>
             </ButtonGroup>
           }
         </Toolbar>

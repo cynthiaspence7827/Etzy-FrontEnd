@@ -5,6 +5,7 @@ import product from './reducers/product';
 import productlist from './reducers/productlist';
 import cart from './reducers/cart';
 import shop from './reducers/shop';
+import favorite from './reducers/favorite';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -13,7 +14,8 @@ const reducer = combineReducers({
   product,
   productlist,
   cart,
-  shop
+  shop,
+  favorite
 });
 
 const configureStore = initialState => {

@@ -6,12 +6,11 @@ export default function reducer(state = {}, action) {
     case EDIT_PRODUCT:
     case LOAD_PRODUCT: {
       return {
-        ...state,
-        currentProduct: action.product
+        ...action.product
       };
     }
 
     default:
-      return state;
+      return {};
   }
 }
